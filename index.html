@@ -378,6 +378,16 @@
     flex: 1;
   }
 
+
+  .service-deliverable {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
   .service-list {
     list-style: none;
     border-top: 1px solid rgba(184,151,90,0.2);
@@ -757,15 +767,15 @@
 <header>
   <div class="header-rule"></div>
   <div class="header-inner" style="padding-top: 130px;">
-    <p class="en-label">REI ISHIKAWA OFFICE — Sports Business Consulting</p>
+    <p class="en-label">REI ISHIKAWA OFFICE — Business Structure Design</p>
     <h1>
       協賛を、<br>
       <span class="accent">売上</span>に変える。
     </h1>
     <p class="hero-sub">
-      スポーツ協賛を「コスト」で終わらせていませんか。<br>
-      商談・採用・組織活性——三つの成果に転換する<br>
-      営業設計の専門家が、伴走します。
+      スポーツ協賛を「広告費」で終わらせず、<br>
+      商談・採用・組織活性につながる営業資産へ変える。<br>
+      現場で売上をつくってきた事業開発プロデューサーが、<br>設計から実行まで伴走します。
     </p>
     <div class="hero-cta">
       <a href="#contact" class="btn-primary">まず30分、話しましょう（無料）</a>
@@ -807,7 +817,7 @@
 
 <!-- WHY ME -->
 <section id="why-me">
-  <p class="section-label">Why Us</p>
+  <p class="section-label">Why Me</p>
   <div class="why-inner">
     <div class="reveal">
       <h2>「やった人」が、<br>設計します。</h2>
@@ -826,7 +836,7 @@
         </p>
         <br>
         <p style="color:var(--gold);">
-          「提案書を作る」のではなく、「現場で動いて結果を出す」——それが私たちの仕事です。
+          「提案書を作る」のではなく、「現場で動いて結果を出す」——それが私の仕事です。
         </p>
       </div>
     </div>
@@ -841,7 +851,7 @@
 
 <!-- TARGETS -->
 <section style="background: rgba(184,151,90,0.04); padding-top:80px; padding-bottom:80px;">
-  <p class="section-label">Who We Serve</p>
+  <p class="section-label">Who I Serve</p>
   <div class="targets-inner">
     <div class="reveal">
       <h2>こんな<br>企業・担当者に</h2>
@@ -870,6 +880,31 @@
   </div>
 </section>
 
+<!-- SECOND LAYER -->
+<section style="background: var(--ink); color: var(--paper); padding: 72px 10vw;">
+  <div style="max-width: 720px; margin: 0 auto; border-left: 3px solid var(--gold); padding-left: 40px;" class="reveal">
+    <p style="font-family:'Cormorant Garamond',serif; font-size:11px; letter-spacing:0.4em; color:var(--gold); margin-bottom:24px; text-transform:uppercase;">What I Really Do</p>
+    <p style="font-family:'Shippori Mincho',serif; font-size:clamp(18px,2vw,24px); line-height:1.9; color:var(--paper); font-weight:500;">
+      私が扱うのは、協賛そのものではありません。
+    </p>
+    <p style="font-size:15px; color:rgba(245,240,232,0.7); line-height:2.2; margin-top:20px;">
+      協賛・PR・営業・採用・地域連携が<strong style="color:var(--paper);">分断されている状態を整理し</strong>、<br>
+      企業の成果につながる構造へ組み替えることです。<br><br>
+      スポーツは、その構造設計が最も見えやすい領域です。<br>
+      だからこそ、入口はスポーツ協賛に絞っています。<br>
+      ただし、対応できる課題は、もっと広い。
+    </p>
+    <div style="margin-top:36px; display:flex; flex-wrap:wrap; gap:12px;">
+      <span style="padding:8px 20px; border:1px solid rgba(184,151,90,0.4); font-size:12px; color:rgba(245,240,232,0.6); letter-spacing:0.1em;">スポーツ協賛設計</span>
+      <span style="padding:8px 20px; border:1px solid rgba(184,151,90,0.4); font-size:12px; color:rgba(245,240,232,0.6); letter-spacing:0.1em;">PR・広報の事業化</span>
+      <span style="padding:8px 20px; border:1px solid rgba(184,151,90,0.4); font-size:12px; color:rgba(245,240,232,0.6); letter-spacing:0.1em;">営業構造改革</span>
+      <span style="padding:8px 20px; border:1px solid rgba(184,151,90,0.4); font-size:12px; color:rgba(245,240,232,0.6); letter-spacing:0.1em;">採用ブランディング</span>
+      <span style="padding:8px 20px; border:1px solid rgba(184,151,90,0.4); font-size:12px; color:rgba(245,240,232,0.6); letter-spacing:0.1em;">地域連携・自治体</span>
+      <span style="padding:8px 20px; border:1px solid rgba(184,151,90,0.4); font-size:12px; color:rgba(245,240,232,0.6); letter-spacing:0.1em;">新規事業開発</span>
+    </div>
+  </div>
+</section>
+
 <!-- SERVICES -->
 <section class="services" id="service">
   <p class="section-label">Services</p>
@@ -882,11 +917,12 @@
       <div class="service-desc">
         現状の協賛活動を解剖し、「なぜ売上につながらないか」を言語化します。改善施策3案をセットで提示。まず現状を整理したい方に。
       </div>
+      <p class="service-deliverable">納品物</p>
       <ul class="service-list">
-        <li>現状分析・課題の構造言語化</li>
-        <li>売上接続設計の方向性提示</li>
-        <li>改善施策3案の提示</li>
-        <li>60分提案セッション</li>
+        <li>課題整理レポート</li>
+        <li>協賛活用導線図</li>
+        <li>改善施策3案</li>
+        <li>60分提案セッション（対面可）</li>
       </ul>
     </div>
     <div class="service-card reveal">
@@ -896,11 +932,12 @@
       <div class="service-desc">
         協賛→商談→売上の導線を設計し、毎月の実行を伴走します。「提案書を作る」だけでなく、商談の現場まで入ります。
       </div>
+      <p class="service-deliverable">納品物</p>
       <ul class="service-list">
-        <li>協賛→営業導線の設計・実行</li>
-        <li>商談ストーリーの構築</li>
-        <li>社内連携・説明資料の設計</li>
-        <li>月2回ミーティング（対面可）</li>
+        <li>月2回MTG（対面可）</li>
+        <li>提案書レビュー・商談ストーリー作成</li>
+        <li>社内稟議資料の作成支援</li>
+        <li>月次アクション管理シート</li>
       </ul>
     </div>
     <div class="service-card reveal">
@@ -910,11 +947,12 @@
       <div class="service-desc">
         スポーツ協賛を軸に、新規事業・地域連携・採用ブランディングまで踏み込んで設計・実行します。経営課題にダイレクトに向き合う最上位プラン。
       </div>
+      <p class="service-deliverable">納品物</p>
       <ul class="service-list">
-        <li>新規事業・協賛パッケージの設計</li>
-        <li>地域連携・ステークホルダー調整</li>
-        <li>採用・組織活性との接続設計</li>
-        <li>実行支援（現場同行可）</li>
+        <li>新規スポンサー設計・提案先リスト</li>
+        <li>商談同席・クロージング支援</li>
+        <li>自治体・地域連携設計</li>
+        <li>パートナー候補開拓・実行支援</li>
       </ul>
     </div>
   </div>
@@ -956,8 +994,8 @@
     <div class="reveal">
       <h3>石川 励</h3>
       <p class="profile-title">
-        スポーツ協賛を「売上・採用・組織」に変える<br>
-        営業設計顧問 ／ 事業開発プロデューサー
+        協賛・PR・営業を、売上と組織成果に変える<br>
+        営業構造設計顧問 ／ 事業開発プロデューサー
       </p>
       <div class="profile-career">
         <div class="career-item">
