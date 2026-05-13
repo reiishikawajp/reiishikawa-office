@@ -98,6 +98,18 @@
     font-size: 1.05em;
   }
 
+
+  .hero-tagline {
+    font-size: clamp(13px, 1.3vw, 15px);
+    color: rgba(26,23,20,0.55);
+    line-height: 2;
+    max-width: 520px;
+    margin-bottom: 28px;
+    border-left: 2px solid var(--gold);
+    padding-left: 20px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.65s forwards;
+  }
   .hero-sub {
     margin-top: 32px;
     font-size: clamp(14px, 1.6vw, 18px);
@@ -770,10 +782,14 @@
     <p class="en-label">REI ISHIKAWA OFFICE — Business Structure Design</p>
     <h1>
       協賛を、<br>
-      <span class="accent">売上</span>に変える。
+      <span class="accent">営業資産</span>へ。
     </h1>
+    <p class="hero-tagline reveal">
+      私が扱うのは、協賛そのものではありません。<br>
+      協賛・PR・営業・採用・地域連携を分断させず、<br>企業成果につながる構造へ組み替えることです。
+    </p>
     <p class="hero-sub">
-      スポーツ協賛を「広告費」で終わらせず、<br>
+      スポーツ協賛を「広告費」で終わらせない。<br>
       商談・採用・組織活性につながる営業資産へ変える。<br>
       現場で売上をつくってきた事業開発プロデューサーが、<br>設計から実行まで伴走します。
     </p>
@@ -876,6 +892,11 @@
         <div class="target-title">スポーツ協賛を新たに検討している企業</div>
         <div class="target-desc">協賛を始める前の「設計段階」から入ることで、最も大きな成果を生み出せます。「何のために協賛するか」を一緒に定義するところから始めます。</div>
       </div>
+      <div class="target-card">
+        <div class="target-tag">Target 04</div>
+        <div class="target-title">地域・採用・PR施策を事業成果につなげたい企業</div>
+        <div class="target-desc">協賛に限らず、PR・採用・地域連携が単発施策で終わっている企業に対し、営業・広報・人事を横断した成果導線を設計します。スポーツ以外の課題もご相談ください。</div>
+      </div>
     </div>
   </div>
 </section>
@@ -928,7 +949,7 @@
     <div class="service-card reveal">
       <div class="service-num">Service 02</div>
       <div class="service-name">営業設計顧問</div>
-      <div class="service-price">¥200,000<span class="service-price-sub" style="font-size:14px; display:block; color:var(--gold-light);">/月（対象：年商10億以上の法人）</span></div>
+      <div class="service-price">¥200,000<span class="service-price-sub" style="font-size:14px; display:block; color:var(--gold-light);">/月〜（協賛・PR・営業を事業成果に接続したい法人）</span></div>
       <div class="service-desc">
         協賛→商談→売上の導線を設計し、毎月の実行を伴走します。「提案書を作る」だけでなく、商談の現場まで入ります。
       </div>
@@ -1288,7 +1309,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-name">REI ISHIKAWA OFFICE</div>
-  <div class="footer-contact">rei.ishikawa.jp@gmail.com </div>
+  <div class="footer-contact">rei.ishikawa.jp@gmail.com ｜ 090-3947-6996</div>
 </footer>
 
 <script>
