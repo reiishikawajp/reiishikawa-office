@@ -1,136 +1,1193 @@
-diff --git a/index.html b/index.html
-index 32ad5c2c9399e88ea1c1f075de4e1f1cfadc242c..86a09077671aecf875b2f688a253e566151ff5c9 100644
---- a/index.html
-+++ b/index.html
-@@ -1074,127 +1074,130 @@
- </section>
- 
- <!-- CONTACT -->
- <section class="contact-section" id="contact">
-   <p class="section-label">Contact</p>
-   <h2 class="reveal">「協賛が、<br>なぜ会社の成果につながらないのか」を<br>整理します。</h2>
-   <p class="reveal" style="font-size:14px; color:var(--mid-gray); max-width:520px; line-height:2; margin-bottom:0;">
-     まず30分、社長ご自身の言葉で課題をお聞かせください。<br>
-     無理な営業は行いません。ただ、課題を整理し、方向性をお伝えします。
-   </p>
- 
-   <div class="contact-wrap reveal">
-     <div class="contact-checklist">
-       <p class="checklist-label">こんな経営者に、特にご連絡いただいています</p>
-       <!-- ★修正③ 社長向け最上位項目 -->
-       <p class="ceo-item">自分の判断で始めた協賛が、会社の成果につながっていない </p>
-       <div class="checklist-body">
-         ✓ 協賛に投じた予算が事業にどう効いているか、自分でも説明できない <br>
-         ✓ ゴルフ協賛や地域クラブへの協賛を、営業・採用にもっと転用したい <br>
-         ✓ 協賛を任せられる人間がおらず、社長自身が動き続けている状態を変えたい<br>
-         ✓ 新たにスポーツ協賛を始めるにあたり、投資設計の段階から相談したい
-       </div>
-     </div>
- 
-     <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm">
-+      <div id="formFields">
-       <div class="form-row">
-         <div class="form-group">
-           <label for="company">会社名 <span class="required">*</span></label>
-           <input type="text" id="company" name="company" placeholder="株式会社〇〇" required>
-         </div>
-         <div class="form-group">
-           <label for="name">お名前 <span class="required">*</span></label>
-           <input type="text" id="name" name="name" placeholder="石川 励" required>
-         </div>
-       </div>
-       <div class="form-group">
-         <label for="email">メールアドレス <span class="required">*</span></label>
-         <input type="email" id="email" name="email" placeholder="your@email.com" required>
-       </div>
-       <div class="form-group">
-         <label for="sport">現在の協賛対象スポーツ・イベント</label>
-         <input type="text" id="sport" name="sport" placeholder="例：ゴルフ、サッカー、まだ検討中 など">
-       </div>
-       <div class="form-group">
-         <label for="type">ご相談の種類 <span class="required">*</span></label>
-         <select id="type" name="type" required>
-           <option value="" disabled selected>選択してください</option>
-           <option value="free30">無料30分相談を申し込む</option>
-           <option value="service01">協賛・営業構造診断（10万円）について</option>
-           <option value="service02">営業設計顧問（月20万円）について</option>
-           <option value="service03">事業開発伴走（月30万円）について</option>
-           <option value="other">その他・まずは話を聞きたい</option>
-         </select>
-       </div>
-       <div class="form-group">
-         <label for="message">現在の課題・ご相談内容 <span class="required">*</span></label>
-         <textarea id="message" name="message" rows="5" placeholder="現状の課題をそのままお書きください。整理されていなくて構いません。" required></textarea>
-       </div>
-       <button type="submit" class="form-submit" id="submitBtn">
-         <span id="submitText">送信する（無理な営業は行いません）</span>
-       </button>
-       <p class="form-note">2営業日以内にご連絡いたします</p>
-+      </div>
-       <div class="form-success" id="formSuccess">
-         <p>✓ 送信が完了しました。<br>2営業日以内にご連絡いたします。</p>
-       </div>
-     </form>
-   </div>
- </section>
- 
- <!-- FOOTER -->
- <footer>
-   <div class="footer-name">REI ISHIKAWA OFFICE</div>
-   <div class="footer-contact">rei.ishikawa.jp@gmail.com</div>
- </footer>
- 
- <script>
-   // Scroll reveal
-   const reveals = document.querySelectorAll('.reveal');
-   const observer = new IntersectionObserver((entries) => {
-     entries.forEach(entry => {
-       if (entry.isIntersecting) {
-         entry.target.classList.add('visible');
-         observer.unobserve(entry.target);
-       }
-     });
-   }, { threshold: 0.1 });
-   reveals.forEach(el => observer.observe(el));
- 
-   // Stagger grids
-   document.querySelectorAll('.problem-grid, .services-grid, .results-grid').forEach(grid => {
-     grid.querySelectorAll('.reveal').forEach((el, i) => {
-       el.style.transitionDelay = `${i * 0.12}s`;
-     });
-   });
- 
-   // Form submit (Formspree AJAX)
-   const form = document.getElementById('contactForm');
-   if (form) {
-     form.addEventListener('submit', async function(e) {
-       e.preventDefault();
-       const btn  = document.getElementById('submitBtn');
-       const txt  = document.getElementById('submitText');
-       const succ = document.getElementById('formSuccess');
-+      const fields = document.getElementById('formFields');
-       btn.disabled = true;
-       txt.textContent = '送信中...';
-       try {
-         const res = await fetch(form.action, {
-           method: 'POST',
-           body: new FormData(form),
-           headers: { 'Accept': 'application/json' }
-         });
-         if (res.ok) {
--          form.style.display = 'none';
-+          fields.style.display = 'none';
-           succ.style.display = 'block';
-         } else {
-           txt.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
-           btn.disabled = false;
-         }
-       } catch(err) {
-         txt.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
-         btn.disabled = false;
-       }
-     });
-   }
- </script>
- </body>
- </html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>石川励 事務所 | REI ISHIKAWA OFFICE</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #0a2342;
+    --navy-mid:   #12376e;
+    --navy-light: #1a4a8a;
+    --red:        #c8102e;
+    --red-dark:   #a00d24;
+    --white:      #ffffff;
+    --off-white:  #f4f6f9;
+    --light-gray: #e8ecf2;
+    --mid-gray:   #6b7a8d;
+    --dark-text:  #0d1b2e;
+    --rule:       rgba(10,35,66,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--dark-text);
+    font-family: 'Noto Serif JP', serif;
+    font-weight: 300;
+    line-height: 1.9;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    padding: 0 6vw;
+    height: 68px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--navy);
+    border-bottom: 3px solid var(--red);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--white); }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    nav { padding: 0 5vw; }
+  }
+
+  /* HERO */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--navy);
+    padding-top: 68px;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    right: -8vw; top: 0; bottom: 0;
+    width: 52vw;
+    background: linear-gradient(160deg, var(--navy-mid) 0%, var(--navy) 70%);
+    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+    z-index: 0;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0; width: 100%; height: 4px;
+    background: linear-gradient(90deg, var(--red) 0%, var(--red-dark) 60%, transparent 100%);
+    z-index: 2;
+  }
+
+  .header-inner {
+    padding: 80px 6vw 90px;
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+  }
+
+  .en-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(34px, 5.5vw, 76px);
+    font-weight: 700;
+    line-height: 1.22;
+    color: var(--white);
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.5s forwards;
+    margin-bottom: 8px;
+  }
+
+  h1 .accent {
+    color: var(--red);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.06em;
+  }
+
+  .hero-tagline {
+    margin-top: 28px;
+    font-size: clamp(13px, 1.3vw, 15px);
+    color: rgba(255,255,255,0.6);
+    line-height: 2;
+    max-width: 500px;
+    border-left: 3px solid var(--red);
+    padding-left: 20px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.65s forwards;
+  }
+
+  .hero-sub {
+    margin-top: 26px;
+    font-size: clamp(13px, 1.3vw, 15px);
+    color: rgba(255,255,255,0.72);
+    max-width: 520px;
+    line-height: 2.1;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.8s forwards;
+  }
+
+  .hero-cta {
+    margin-top: 44px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 1s forwards;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 16px 40px;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-decoration: none;
+    font-weight: 500;
+    border: 2px solid var(--red);
+    transition: background 0.25s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--red-dark); border-color: var(--red-dark); transform: translateY(-2px); }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 16px 40px;
+    background: transparent;
+    color: var(--white);
+    border: 2px solid rgba(255,255,255,0.4);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-decoration: none;
+    transition: border-color 0.25s;
+  }
+
+  .btn-secondary:hover { border-color: var(--white); }
+
+  .bg-text {
+    position: absolute;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(90px, 15vw, 190px);
+    font-weight: 300;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.055);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    line-height: 1;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--light-gray);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat-cell {
+    padding: 36px 20px;
+    text-align: center;
+    border-right: 1px solid var(--light-gray);
+    transition: background 0.2s;
+  }
+
+  .stat-cell:last-child { border-right: none; }
+  .stat-cell:hover { background: var(--off-white); }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.2vw, 44px);
+    font-weight: 300;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-num sup { font-size: 0.5em; vertical-align: super; color: var(--red); }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--mid-gray);
+    letter-spacing: 0.08em;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 680px) {
+    .stats-bar { grid-template-columns: repeat(2,1fr); }
+    .stat-cell:nth-child(2) { border-right: none; }
+    .stat-cell:nth-child(3) { border-right: 1px solid var(--light-gray); border-top: 1px solid var(--light-gray); }
+    .stat-cell:nth-child(4) { border-top: 1px solid var(--light-gray); }
+  }
+
+  /* SECTIONS */
+  section { padding: 96px 6vw; }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    width: 48px; height: 1px;
+    background: var(--red);
+    opacity: 0.5;
+  }
+
+  h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--navy);
+    margin-bottom: 28px;
+  }
+
+  .red-rule { width: 48px; height: 3px; background: var(--red); margin: 24px 0 32px; }
+
+  /* PROBLEM */
+  .problem { background: var(--navy); }
+  .problem .section-label { color: rgba(200,16,46,0.9); }
+  .problem .section-label::after { background: rgba(200,16,46,0.5); }
+  .problem h2 { color: var(--white); }
+
+  /* ★修正① CEO向け冒頭ボックス */
+  .ceo-callout {
+    background: rgba(200,16,46,0.13);
+    border-left: 4px solid var(--red);
+    padding: 24px 28px;
+    margin-bottom: 36px;
+    max-width: 680px;
+  }
+
+  .ceo-callout p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.88);
+    line-height: 2;
+    font-family: 'Shippori Mincho', serif;
+  }
+
+  .ceo-callout strong { color: var(--white); }
+
+  .problem-lead {
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    line-height: 2.1;
+    margin-bottom: 52px;
+  }
+
+  .problem-lead strong { color: rgba(255,255,255,0.88); }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 2px;
+  }
+
+  .problem-item {
+    padding: 34px 26px;
+    background: rgba(255,255,255,0.04);
+    border-top: 3px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+
+  .problem-item:hover { border-top-color: var(--red); background: rgba(255,255,255,0.07); }
+
+  .problem-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 46px;
+    font-weight: 300;
+    color: var(--red);
+    opacity: 0.35;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .problem-text { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.9; }
+
+  /* WHY */
+  .why { background: var(--off-white); }
+
+  .why-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) { .why-inner { grid-template-columns: 1fr; gap: 36px; } }
+
+  .why-story { font-size: 14px; color: var(--mid-gray); line-height: 2.1; }
+  .why-story strong { color: var(--navy); font-weight: 500; }
+  .why-story p { margin-bottom: 16px; }
+  .why-highlight { color: var(--red); font-family: 'Shippori Mincho', serif; font-size: 15px; font-weight: 500; }
+
+  .why-quote {
+    border-left: 4px solid var(--navy);
+    padding: 30px 34px;
+    background: var(--white);
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(15px, 1.6vw, 19px);
+    line-height: 2;
+    color: var(--navy);
+    box-shadow: 4px 4px 0 var(--red);
+  }
+
+  .why-quote strong { color: var(--red); }
+
+  /* WHO I SERVE */
+  .who { background: var(--white); }
+
+  /* ★修正② CEO向けバナー */
+  .ceo-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--navy);
+    color: var(--white);
+    padding: 10px 20px;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    margin-bottom: 18px;
+  }
+
+  .ceo-banner .tag {
+    background: var(--red);
+    font-size: 10px;
+    padding: 2px 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .ceo-statement {
+    font-size: 14px;
+    color: var(--mid-gray);
+    max-width: 660px;
+    margin-bottom: 44px;
+    line-height: 2;
+    border-left: 3px solid var(--light-gray);
+    padding-left: 18px;
+  }
+
+  .ceo-statement strong { color: var(--navy); font-weight: 500; }
+
+  .targets-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 56px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) { .targets-layout { grid-template-columns: 1fr; gap: 28px; } }
+
+  .who-intro p { font-size: 14px; color: var(--mid-gray); line-height: 2; }
+
+  .target-cards { display: flex; flex-direction: column; gap: 2px; }
+
+  .target-card {
+    padding: 22px 26px;
+    border-left: 4px solid var(--light-gray);
+    background: var(--off-white);
+    transition: border-left-color 0.25s, background 0.25s;
+  }
+
+  .target-card:hover { border-left-color: var(--navy); background: var(--white); }
+
+  .target-tag {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--red);
+    font-family: 'Cormorant Garamond', serif;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .target-title { font-family: 'Shippori Mincho', serif; font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 5px; }
+  .target-desc { font-size: 13px; color: var(--mid-gray); line-height: 1.85; }
+
+  /* WHAT I DO */
+  .what-section { background: var(--navy); padding: 72px 6vw; }
+  .what-section .section-label { color: rgba(200,16,46,0.85); }
+  .what-section .section-label::after { background: rgba(200,16,46,0.4); }
+
+  .what-inner { max-width: 740px; border-left: 4px solid var(--red); padding-left: 36px; }
+
+  .what-inner .what-head {
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(17px, 2vw, 22px);
+    line-height: 1.9;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+
+  .what-inner .what-body {
+    font-size: 14px;
+    color: rgba(255,255,255,0.62);
+    line-height: 2.1;
+    margin-bottom: 28px;
+  }
+
+  .what-inner .what-body strong { color: rgba(255,255,255,0.88); }
+
+  .what-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .what-tag {
+    padding: 7px 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+    font-size: 11px;
+    color: rgba(255,255,255,0.58);
+    letter-spacing: 0.1em;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .what-tag:hover { border-color: var(--red); color: rgba(255,255,255,0.9); }
+
+  /* SERVICES */
+  .services { background: var(--off-white); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 2px;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr; } }
+
+  .service-card {
+    background: var(--white);
+    padding: 42px 34px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(10,35,66,0.11); }
+
+  .service-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: var(--navy);
+    transition: background 0.3s;
+  }
+
+  .service-card:hover::before { background: var(--red); }
+
+  .service-num { font-family: 'Cormorant Garamond', serif; font-size: 10px; letter-spacing: 0.35em; color: var(--red); text-transform: uppercase; margin-bottom: 18px; }
+  .service-name { font-family: 'Shippori Mincho', serif; font-size: clamp(16px,1.5vw,19px); font-weight: 500; color: var(--navy); margin-bottom: 16px; }
+  .service-price { font-family: 'Cormorant Garamond', serif; font-size: clamp(24px,2.3vw,34px); color: var(--navy); font-weight: 300; line-height: 1; margin-bottom: 4px; }
+  .service-price-sub { font-size: 11px; color: var(--mid-gray); letter-spacing: 0.08em; margin-bottom: 22px; line-height: 1.6; }
+  .service-desc { font-size: 13px; color: var(--mid-gray); line-height: 2; margin-bottom: 22px; flex: 1; }
+  .service-deliverable { font-size: 10px; letter-spacing: 0.25em; color: var(--navy); font-family: 'Cormorant Garamond', serif; text-transform: uppercase; margin-bottom: 10px; }
+
+  .service-list { list-style: none; border-top: 1px solid var(--light-gray); padding-top: 18px; }
+
+  .service-list li {
+    font-size: 12px; color: var(--mid-gray);
+    padding: 5px 0 5px 16px;
+    position: relative; line-height: 1.7;
+  }
+
+  .service-list li::before { content: '—'; position: absolute; left: 0; color: var(--red); }
+
+  /* RESULTS */
+  .results { background: var(--navy); }
+  .results .section-label { color: rgba(200,16,46,0.85); }
+  .results .section-label::after { background: rgba(200,16,46,0.5); }
+  .results h2 { color: var(--white); }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 2px;
+    margin-top: 44px;
+  }
+
+  @media (max-width: 900px) { .results-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 480px) { .results-grid { grid-template-columns: 1fr; } }
+
+  .result-item {
+    padding: 40px 24px;
+    background: rgba(255,255,255,0.04);
+    text-align: center;
+    border-top: 3px solid transparent;
+    transition: border-top-color 0.3s, background 0.3s;
+  }
+
+  .result-item:hover { border-top-color: var(--red); background: rgba(255,255,255,0.07); }
+
+  .result-num { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px,3.8vw,54px); font-weight: 300; color: var(--white); line-height: 1; margin-bottom: 10px; }
+  .result-num sup { font-size: 0.5em; vertical-align: super; color: var(--red); }
+  .result-label { font-size: 12px; color: rgba(255,255,255,0.52); letter-spacing: 0.06em; line-height: 1.8; }
+
+  .results-note {
+    margin-top: 32px;
+    padding: 26px 30px;
+    background: rgba(255,255,255,0.05);
+    max-width: 700px;
+    border-left: 4px solid var(--red);
+  }
+
+  .results-note p { font-size: 13px; color: rgba(255,255,255,0.58); line-height: 2.1; }
+  .results-note strong { color: rgba(255,255,255,0.88); }
+
+  /* PROFILE */
+  .profile { background: var(--white); }
+
+  .profile-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) { .profile-inner { grid-template-columns: 1fr; gap: 36px; } }
+
+  .profile-aside h3 { font-family: 'Shippori Mincho', serif; font-size: clamp(20px,2.3vw,30px); font-weight: 500; color: var(--navy); margin-bottom: 7px; }
+  .profile-title { font-size: 12px; color: var(--red); letter-spacing: 0.1em; margin-bottom: 24px; line-height: 1.8; }
+
+  .career-item {
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--light-gray);
+    font-size: 13px;
+  }
+
+  .career-year { font-family: 'Noto Serif JP', serif; color: var(--navy); font-size: 11px; font-weight: 500; letter-spacing: 0.05em; padding-top: 2px; line-height: 1.7; }
+  .career-co { color: var(--mid-gray); line-height: 1.8; }
+
+  .profile-body { font-size: 14px; color: var(--mid-gray); line-height: 2.1; }
+  .profile-body p { margin-bottom: 16px; }
+  .profile-body strong { color: var(--navy); font-weight: 500; }
+  .profile-body .highlight { color: var(--red); font-family: 'Shippori Mincho', serif; font-size: 15px; }
+
+  /* CONTACT */
+  .contact-section { background: var(--off-white); padding: 96px 6vw; }
+  .contact-section h2 { color: var(--navy); }
+
+  .contact-wrap {
+    max-width: 860px;
+    margin: 48px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 44px;
+    align-items: start;
+  }
+
+  @media (max-width: 768px) { .contact-wrap { grid-template-columns: 1fr; } }
+
+  .contact-checklist {
+    padding: 30px;
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .checklist-label { font-size: 10px; color: rgba(255,255,255,0.42); letter-spacing: 0.2em; margin-bottom: 18px; font-family: 'Cormorant Garamond', serif; text-transform: uppercase; }
+
+  /* ★修正③ 社長向け最上位項目 */
+  .ceo-item {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white);
+    border-bottom: 1px solid rgba(200,16,46,0.35);
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    line-height: 1.8;
+  }
+
+  .ceo-item::before { content: '★ '; color: var(--red); }
+
+  .checklist-body { font-size: 13px; color: rgba(255,255,255,0.72); line-height: 2.4; }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+  .form-group label { font-size: 11px; letter-spacing: 0.15em; color: var(--mid-gray); }
+
+  .required { color: var(--red); margin-left: 2px; }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    background: var(--white);
+    border: 1px solid var(--light-gray);
+    color: var(--dark-text);
+    font-family: 'Noto Serif JP', serif;
+    font-size: 14px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+  }
+
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 2px rgba(10,35,66,0.07);
+  }
+
+  .contact-form select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230a2342' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 13px center;
+    background-color: var(--white);
+    padding-right: 34px;
+  }
+
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: rgba(107,122,141,0.45); font-size: 13px; }
+
+  .contact-form textarea { resize: vertical; min-height: 110px; line-height: 1.8; }
+
+  .form-submit {
+    padding: 17px 40px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    cursor: pointer;
+    transition: background 0.25s;
+    width: 100%;
+  }
+
+  .form-submit:hover { background: var(--navy-light); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .form-note { font-size: 11px; color: var(--mid-gray); text-align: center; letter-spacing: 0.08em; margin-top: 4px; }
+
+  .form-success {
+    display: none;
+    padding: 22px;
+    background: rgba(10,35,66,0.06);
+    border: 1px solid rgba(10,35,66,0.18);
+    text-align: center;
+  }
+
+  .form-success p { font-size: 15px; color: var(--navy); line-height: 2; }
+
+  /* FOOTER */
+  footer {
+    padding: 30px 6vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: var(--navy);
+    border-top: 3px solid var(--red);
+  }
+
+  .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 15px; letter-spacing: 0.2em; color: var(--white); }
+  .footer-contact { font-size: 12px; color: rgba(255,255,255,0.48); letter-spacing: 0.08em; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.75s ease, transform 0.75s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">REI ISHIKAWA OFFICE</a>
+  <ul class="nav-links">
+    <li><a href="#problem">課題</a></li>
+    <li><a href="#service">サービス</a></li>
+    <li><a href="#results">実績</a></li>
+    <li><a href="#profile">プロフィール</a></li>
+    <li><a href="#contact">相談する</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header>
+  <div class="bg-text">REI</div>
+  <div class="header-inner">
+    <p class="en-label">REI ISHIKAWA OFFICE — Business Structure Design</p>
+    <h1>
+      社長の想いで始めた協賛を、<br>
+      <span class="accent">会社の成果</span>に変える。
+    </h1>
+    <p class="hero-tagline">
+      私が扱うのは、協賛そのものではありません。<br>
+      協賛・PR・営業・採用・地域連携を分断させず、<br>
+      企業成果につながる構造へ組み替えることです。
+    </p>
+    <p class="hero-sub">
+      スポーツ協賛を「広告費」で終わらせない。<br>
+      営業・採用・組織活性につながる経営資産へ変える。<br>
+      現場で売上をつくってきた事業開発プロデューサーが、<br>
+      設計から実行まで伴走します。
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">協賛活用の可能性を相談する</a>
+      <a href="#results" class="btn-secondary">現場の実績を見る</a>
+    </div>
+  </div>
+</header>
+
+<!-- STATS BAR -->
+<div class="stats-bar reveal">
+  <div class="stat-cell">
+    <div class="stat-num">3<sup>億</sup></div>
+    <div class="stat-label">新規ビジネス創出<br>（国際試合興行）</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">1.7<sup>億</sup></div>
+    <div class="stat-label">スポンサー売上増<br>（INAC神戸）</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">150<sup>%</sup></div>
+    <div class="stat-label">売上増達成<br>（岡山湯郷Belle）</div>
+  </div>
+  <div class="stat-cell">
+    <div class="stat-num">2<sup>位</sup></div>
+    <div class="stat-label">平均観客動員数<br>（なでしこリーグ全22チーム）</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <p class="section-label">The Problem</p>
+  <h2 class="reveal">協賛しているのに、<br>成果が説明できない。</h2>
+
+  <!-- ★修正① 社長向け冒頭ボックス -->
+  <div class="ceo-callout reveal">
+    <p>
+      <strong>社長ご自身が「このチームを応援したい」「地域に貢献したい」という想いで始めた協賛が、</strong><br>
+      社内で営業・採用・広報に活かしきれず、「会社の資産」になっていない——<br>
+      これが、多くのスポーツ協賛企業に共通する、最大の課題です。
+    </p>
+  </div>
+
+  <p class="problem-lead reveal">
+    広告効果の可視化、採用への接続、営業機会の創出——<br>
+    「やっている」のに「なぜ成果が出ないか」が言語化できない。<br>
+    その課題は、協賛の設計が間違っているのではなく、<strong>接続の設計がない</strong>だけです。
+  </p>
+
+  <div class="problem-grid reveal">
+    <div class="problem-item">
+      <div class="problem-num">01</div>
+      <div class="problem-text">ロゴ掲出・観戦招待で終わっており、売上・採用への接続が設計されていない</div>
+    </div>
+    <div class="problem-item">
+      <div class="problem-num">02</div>
+      <div class="problem-text">社長が投資した協賛が、営業・採用・広報に十分活かされず、毎年予算更新のたびに社内説明に苦労している</div>
+    </div>
+    <div class="problem-item">
+      <div class="problem-num">03</div>
+      <div class="problem-text">スポンサー活動が単発で終わり、中長期のパートナーシップになっていない</div>
+    </div>
+    <div class="problem-item">
+      <div class="problem-num">04</div>
+      <div class="problem-text">協賛を会社の成果に変えるための打ち手が、社内に蓄積されていない</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ME -->
+<section class="why" id="why-me">
+  <p class="section-label">Why Me</p>
+  <div class="why-inner">
+    <div class="reveal">
+      <h2>「やった人」が、<br>設計します。</h2>
+      <div class="red-rule"></div>
+      <div class="why-story">
+        <p>私はコンサルタントである前に、<strong>スポーツ現場の経営者として動いた人間</strong>です。</p>
+        <p>INAC神戸では事業統括本部長として、大手総合商社のトップスポンサー契約（数千万円規模）を、担当者からの問い合わせ起点に役員決裁まで<strong>一人で完結</strong>させました。</p>
+        <p>岡山湯郷Belleでは、経営危機のクラブに事業部長として現場に入り、ゼロから運営を立て直し、<strong>翌シーズンのスポンサー売上150%増</strong>を達成しました。</p>
+        <p class="why-highlight">「提案書を作る」のではなく、「現場で動いて結果を出す」——それが私の仕事です。</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="why-quote">
+        その時に気づいたのは、<br>
+        企業の<strong>社長・役員</strong>は<br>
+        「協賛の投資が、会社の成果に<br>
+        つながっているか」を<br>
+        常に問われているということでした。<br><br>
+        私が提供するのは、<br>
+        その<strong>「成果につながる設計」</strong>です。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO I SERVE -->
+<section class="who" id="who">
+  <p class="section-label">Who I Serve</p>
+
+  <!-- ★修正② CEO向けバナー -->
+  <div class="reveal">
+    <div class="ceo-banner">
+      <span class="tag">特に</span>
+      社長ご自身の想いで協賛を始めた企業の経営者に、最も力を発揮します
+    </div>
+    <p class="ceo-statement">
+      「このチームを応援したい」「地域のために何かしたい」——<strong>社長の想いで決めた協賛</strong>が、<br>
+      社内で営業・採用・広報に活かしきれていない。その状態を変えることが、私の仕事です。
+    </p>
+  </div>
+
+  <div class="targets-layout">
+    <div class="who-intro reveal">
+      <h2>こんな<br>企業・経営者に</h2>
+      <div class="red-rule"></div>
+      <p>石川励事務所が最も力を発揮できる相手を、正直にお伝えします。</p>
+    </div>
+    <div class="target-cards reveal">
+      <div class="target-card">
+        <div class="target-tag">Target 01</div>
+        <div class="target-title">ゴルフ協賛をしている中堅〜大手企業</div>
+        <div class="target-desc">経営者層・富裕層との親和性が高いゴルフ協賛は、設計次第で「商談機会そのもの」になります。ロゴ掲出で止まっている協賛を、ビジネスエコシステムに変えます。</div>
+      </div>
+      <div class="target-card">
+        <div class="target-tag">Target 02</div>
+        <div class="target-title">なでしこリーグ・Jリーグのスポンサー企業</div>
+        <div class="target-desc">地域密着スポーツの協賛は、採用・地域ブランド・社員エンゲージメントとの接続が最も効く領域です。現場経験のある視点で設計します。</div>
+      </div>
+      <div class="target-card">
+        <div class="target-tag">Target 03</div>
+        <div class="target-title">スポーツ協賛を新たに検討している企業</div>
+        <div class="target-desc">協賛を始める前の「設計段階」から入ることで、最も大きな成果を生み出せます。「何のために協賛するか」を一緒に定義するところから始めます。</div>
+      </div>
+      <div class="target-card">
+        <div class="target-tag">Target 04</div>
+        <div class="target-title">地域・採用・PR施策を事業成果につなげたい企業</div>
+        <div class="target-desc">協賛に限らず、PR・採用・地域連携が単発施策で終わっている企業に対し、営業・広報・人事を横断した成果導線を設計します。スポーツ以外の課題もご相談ください。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT I DO -->
+<div class="what-section">
+  <p class="section-label">What I Really Do</p>
+  <div class="what-inner reveal">
+    <p class="what-head">私が扱うのは、協賛そのものではありません。</p>
+    <p class="what-body">
+      協賛・PR・営業・採用・地域連携が<strong>分断されている状態を整理し</strong>、<br>
+      企業の成果につながる構造へ組み替えることです。<br><br>
+      スポーツは、その構造設計が最も見えやすい領域です。<br>
+      だからこそ、入口はスポーツ協賛に絞っています。<br>
+      ただし、対応できる課題は、もっと広い。
+    </p>
+    <div class="what-tags">
+      <span class="what-tag">スポーツ協賛設計</span>
+      <span class="what-tag">PR・広報の事業化</span>
+      <span class="what-tag">営業構造改革</span>
+      <span class="what-tag">採用ブランディング</span>
+      <span class="what-tag">地域連携・自治体</span>
+      <span class="what-tag">新規事業開発</span>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="service">
+  <p class="section-label">Services</p>
+  <h2 class="reveal">三つのサービス、<br>一つの目標——「協賛を成果に」</h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">Service 01</div>
+      <div class="service-name">協賛・営業構造診断</div>
+      <div class="service-price">¥100,000</div>
+      <div class="service-price-sub">単発・最短2週間</div>
+      <div class="service-desc">現状の協賛活動を解剖し、「なぜ売上につながらないか」を言語化します。改善施策3案をセットで提示。まず現状を整理したい方に。</div>
+      <p class="service-deliverable">こんな状態になります</p>
+      <ul class="service-list">
+        <li>「なぜ成果が出ないか」が言語化され、社内で説明できるようになります</li>
+        <li>協賛を売上・採用・組織に接続する方向性が定まります</li>
+        <li>次に何をすべきかが明確になります</li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">Service 02</div>
+      <div class="service-name">営業設計顧問</div>
+      <div class="service-price">¥200,000</div>
+      <div class="service-price-sub">/月〜（協賛・PR・営業を事業成果に接続したい法人）</div>
+      <div class="service-desc">協賛→商談→売上の導線を設計し、毎月の実行を伴走します。「提案書を作る」だけでなく、商談の現場まで入ります。</div>
+      <p class="service-deliverable">こんな状態になります</p>
+      <ul class="service-list">
+        <li>商談が前に進み、社内承認が取れるようになります</li>
+        <li>協賛の効果を、経営層に説明できる言葉が生まれます</li>
+        <li>「やりっぱなし」の協賛が、継続的な営業資産に変わります</li>
+      </ul>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">Service 03</div>
+      <div class="service-name">事業開発伴走</div>
+      <div class="service-price">¥300,000</div>
+      <div class="service-price-sub">/月（新規スポンサー開拓フェーズ）</div>
+      <div class="service-desc">スポーツ協賛を軸に、新規事業・地域連携・採用ブランディングまで踏み込んで設計・実行します。経営課題にダイレクトに向き合う最上位プラン。</div>
+      <p class="service-deliverable">こんな状態になります</p>
+      <ul class="service-list">
+        <li>新規スポンサー候補との関係が動き始めます</li>
+        <li>協賛・PR・採用・地域連携が一本の線でつながります</li>
+        <li>経営課題の解決に、直接貢献できる体制が整います</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results" id="results">
+  <p class="section-label">Track Record</p>
+  <h2 class="reveal">数字で語る、現場の実績</h2>
+  <div class="results-grid">
+    <div class="result-item reveal">
+      <div class="result-num">3<sup>億</sup></div>
+      <div class="result-label">新規ビジネス創出<br>（サッカー国際親善試合興行）</div>
+    </div>
+    <div class="result-item reveal">
+      <div class="result-num">1.7<sup>億</sup></div>
+      <div class="result-label">スポンサー売上増<br>（INAC神戸 2021シーズン）</div>
+    </div>
+    <div class="result-item reveal">
+      <div class="result-num">150<sup>%</sup></div>
+      <div class="result-label">売上増達成<br>（岡山湯郷Belle 再建）</div>
+    </div>
+    <div class="result-item reveal">
+      <div class="result-num">2<sup>位</sup></div>
+      <div class="result-label">平均観客動員数<br>（なでしこリーグ全22チーム中）</div>
+    </div>
+  </div>
+  <div class="results-note reveal">
+    <p>これらは「提案した」数字ではなく、<strong>現場で動いて生み出した数字</strong>です。INAC神戸では事業統括本部長として6年8ヶ月、岡山湯郷Belleでは事業部長として現場に入り、スポンサー営業から集客・運営まで一気通貫で実行した結果です。</p>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="profile" id="profile">
+  <p class="section-label">Profile</p>
+  <div class="profile-inner">
+    <div class="reveal">
+      <h3>石川 励</h3>
+      <p class="profile-title">
+        協賛・PR・営業を、売上と組織成果に変える<br>
+        営業構造設計顧問 ／ 事業開発プロデューサー
+      </p>
+      <div>
+        <div class="career-item">
+          <span class="career-year">スポーツ×PR</span>
+          <span class="career-co">サニーサイドアップにて10年。PR・スポーツマーケティング・新規事業開発を担当。日本初のショッパーメディア「たまご広告」を事業化。</span>
+        </div>
+        <div class="career-item">
+          <span class="career-year">スポーツ経営</span>
+          <span class="career-co">INAC神戸 事業統括本部長として6年8ヶ月。スポンサー営業・球団運営全般を統括。新規スポンサー売上1.7億円増を達成。</span>
+        </div>
+        <div class="career-item">
+          <span class="career-year">クラブ再建</span>
+          <span class="career-co">岡山湯郷Belle 事業部長として経営危機から再建。ゼロベースで運営を立て直し、スポンサー売上150%増・観客動員なでしこリーグ2位を達成。</span>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="red-rule"></div>
+      <div class="profile-body">
+        <p>スポーツ・PR・事業開発を横断し、<strong>「認知で終わらない設計」</strong>を強みとする。</p>
+        <p>キャリアの中心は、常に「スポーツを通じたビジネスの創造」でした。広告代理店での営業経験を持ちながら、PR会社サニーサイドアップでは<strong>日本初のショッパーメディア「たまご広告」をゼロから事業化</strong>——誰もやっていないことを市場にする事業構想力を養いました。その後、INAC神戸では事業統括本部長として、スポンサーシップを「企業価値を高める投資」として設計し、大手総合商社をはじめとするトップスポンサーを獲得しました。</p>
+        <p>岡山湯郷Belleでは、経営危機に直面したクラブに事業部長として現場に入り、ゼロから立て直し。わずか1年半でスポンサー売上150%増、平均観客動員数なでしこリーグ全22チーム中2位を達成しました。</p>
+        <p class="highlight">「コンサルタントが提案し、クライアントが実行する」——そのモデルではなく、<strong>「一緒に現場で動く」</strong>ことを信条としています。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <p class="section-label">Contact</p>
+  <h2 class="reveal">「協賛が売上に<br>つながらない理由」を<br>整理します。</h2>
+  <p class="reveal" style="font-size:14px; color:var(--mid-gray); max-width:520px; line-height:2; margin-bottom:0;">
+    まず30分、現状の課題をそのままお話しください。<br>
+    無理な営業は行いません。ただ、課題を整理し、方向性をお伝えします。
+  </p>
+
+  <div class="contact-wrap reveal">
+    <div class="contact-checklist">
+      <p class="checklist-label">こんな方に特にご連絡いただいています</p>
+      <!-- ★修正③ 社長向け最上位項目 -->
+      <p class="ceo-item">自分が決めた協賛が、社内で営業・採用に活かしきれていない</p>
+      <div class="checklist-body">
+        ✓ 協賛予算の稟議が毎年通りにくくなっている<br>
+        ✓ スポンサー活動の担当者が異動し、知見がリセットされた<br>
+        ✓ ゴルフ協賛をしているが、接待以外の活用ができていない<br>
+        ✓ 新しくスポーツ協賛を始めるにあたり、設計から相談したい
+      </div>
+    </div>
+
+    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" id="contactForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="company">会社名 <span class="required">*</span></label>
+          <input type="text" id="company" name="company" placeholder="株式会社〇〇" required>
+        </div>
+        <div class="form-group">
+          <label for="name">お名前 <span class="required">*</span></label>
+          <input type="text" id="name" name="name" placeholder="石川 励" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">メールアドレス <span class="required">*</span></label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="sport">現在の協賛対象スポーツ・イベント</label>
+        <input type="text" id="sport" name="sport" placeholder="例：ゴルフ、サッカー、まだ検討中 など">
+      </div>
+      <div class="form-group">
+        <label for="type">ご相談の種類 <span class="required">*</span></label>
+        <select id="type" name="type" required>
+          <option value="" disabled selected>選択してください</option>
+          <option value="free30">無料30分相談を申し込む</option>
+          <option value="service01">協賛・営業構造診断（10万円）について</option>
+          <option value="service02">営業設計顧問（月20万円）について</option>
+          <option value="service03">事業開発伴走（月30万円）について</option>
+          <option value="other">その他・まずは話を聞きたい</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">現在の課題・ご相談内容 <span class="required">*</span></label>
+        <textarea id="message" name="message" rows="5" placeholder="現状の課題をそのままお書きください。整理されていなくて構いません。" required></textarea>
+      </div>
+      <button type="submit" class="form-submit" id="submitBtn">
+        <span id="submitText">送信する（無理な営業は行いません）</span>
+      </button>
+      <p class="form-note">2営業日以内にご連絡いたします</p>
+      <div class="form-success" id="formSuccess">
+        <p>✓ 送信が完了しました。<br>2営業日以内にご連絡いたします。</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">REI ISHIKAWA OFFICE</div>
+  <div class="footer-contact">rei.ishikawa.jp@gmail.com</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger grids
+  document.querySelectorAll('.problem-grid, .services-grid, .results-grid').forEach(grid => {
+    grid.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.12}s`;
+    });
+  });
+
+  // Form submit (Formspree AJAX)
+  const form = document.getElementById('contactForm');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn  = document.getElementById('submitBtn');
+      const txt  = document.getElementById('submitText');
+      const succ = document.getElementById('formSuccess');
+      btn.disabled = true;
+      txt.textContent = '送信中...';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          succ.style.display = 'block';
+        } else {
+          txt.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+          btn.disabled = false;
+        }
+      } catch(err) {
+        txt.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+        btn.disabled = false;
+      }
+    });
+  }
+</script>
+</body>
+</html>
